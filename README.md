@@ -27,7 +27,7 @@ Example output:
 ```
 Installation
 ```bash
-go install github.com/yeqainmen/kubectl-mounts@latest
+go install github.com/yeqianmen/kubectl-mounts@latest
 ```
 Or build manually:
 
