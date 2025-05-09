@@ -13,5 +13,27 @@
 
 ```bash
 kubectl mounts
+```
+Example output:
 
+```pgsql
 
++------------+-----------+--------------+----------------------+---------------------+
+| POD        | CONTAINER | VOLUME NAME  | MOUNT PATH           | VOLUME TYPE         |
++------------+-----------+--------------+----------------------+---------------------+
+| mypod-1234 | app       | config-vol   | /etc/config          | ConfigMap(app-cm)   |
+| mypod-1234 | app       | log-vol      | /var/log             | EmptyDir            |
++------------+-----------+--------------+----------------------+---------------------+
+```
+Installation
+```bash
+go install github.com/yeqainmen/kubectl-mounts@latest
+```
+Or build manually:
+
+```bash
+git clone https://github.com/yeqianmen/kubectl-mounts.git
+cd kubectl-mounts
+go build -o kubectl-mounts
+sudo mv kubectl-mounts /usr/local/bin/
+```
