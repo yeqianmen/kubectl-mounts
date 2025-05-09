@@ -1,4 +1,4 @@
-module kubectl-mounts
+module github.com/yeqianmen/kubectl-mounts
 
 go 1.24.2
 
