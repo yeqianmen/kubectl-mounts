@@ -1,6 +1,6 @@
 version: 2
 builds:
-  - id: kubectl-images
+  - id: kubectl-mounts
     main: .
     binary: kubectl-mounts
     env:
@@ -26,7 +26,8 @@ builds:
 
 
 archives:
-  - builds:
+  - id: kubectl-mounts
+    builds:
       - kubectl-mounts
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     wrap_in_directory: false
