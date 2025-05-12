@@ -25,13 +25,13 @@ jobs:
 
       - name: Build for ${{ matrix.os }}
         run: |
-          GOOS=${{ matrix.os }} GOARCH=amd64 go build -o kubectl-mounts-${{ matrix.os }}-${{ matrix.go-version }} main.go  # 为不同操作系统构建文件
+          GOOS=${{ matrix.os }} GOARCH=amd64 go build -o kubectl-mounts-${{ matrix.os }} main.go  # 为不同操作系统构建文件
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: kubectl-mounts-${{ matrix.os }}
-          path: kubectl-mounts-${{ matrix.os }}-${{ matrix.go-version }}  # 上传构建的二进制文件
+          path: kubectl-mounts-${{ matrix.os }}  # 上传构建的二进制文件
 
   release:
     runs-on: ubuntu-latest
