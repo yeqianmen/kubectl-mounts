@@ -19,6 +19,9 @@ builds:
         goarch: arm64
       - goos: darwin
         goarch: arm
+      - goos: linux
+        goarch: arm64
+        
 
 
 archives:
