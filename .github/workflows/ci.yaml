@@ -1,53 +1,22 @@
-name: Build and Release
-
+name: release
 on:
   push:
     tags:
-      - 'v*'   # 每次推送以 v 开头的 tag 时触发
-
+      - 'v*.*.*'
 jobs:
-  build:
-    runs-on: ubuntu-latest  # 使用 Ubuntu 来执行构建步骤
-
-    strategy:
-      matrix:
-        os: [linux, windows, darwin]  # 三个平台：Linux、Windows、macOS
-        go-version: [1.20]            # Go 版本
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # 检出代码
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}  # 设置 Go 版本
-
-      - name: Build for ${{ matrix.os }}
-        run: |
-          GOOS=${{ matrix.os }} GOARCH=amd64 go build -o kubectl-mounts-${{ matrix.os }} main.go  # 为不同操作系统构建文件
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: kubectl-mounts-${{ matrix.os }}
-          path: kubectl-mounts-${{ matrix.os }}  # 上传构建的二进制文件
-
-  release:
+  goreleaser:
     runs-on: ubuntu-latest
-
-    needs: build  # 确保 build 任务完成后才执行
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Setup Go
+        uses: actions/setup-go@v4
         with:
-          files: |
-            kubectl-mounts-linux-1.20
-            kubectl-mounts-darwin-1.20
-            kubectl-mounts-windows-1.20
+          go-version: 1.20
+      - name: GoReleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub token 进行授权
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
