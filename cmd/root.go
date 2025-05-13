@@ -54,64 +54,9 @@ func init() {
 	rootCmd.Flags().StringVarP(&podFilter, "pod", "p", "", "Filter by specific Pod name")
 	rootCmd.Flags().StringVarP(&kubeconfig, "kubeconfig", "k", "", "Path to kubeconfig file (default $HOME/.kube/config)")
 	rootCmd.Flags().StringVarP(&output, "output", "o", "", "Output format: table|yaml|json(default table)")
-	// Register namespace completion
-	rootCmd.RegisterFlagCompletionFunc("namespace", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		config, err := getKubeConfig()
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-		clientset, err := kubernetes.NewForConfig(config)
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
+	// Register flag
+	RegisterCompletions(rootCmd)
 
-		nsList, err := clientset.CoreV1().Namespaces().List(context.Background(), metav1.ListOptions{})
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-
-		names := make([]string, 0, len(nsList.Items))
-		for _, ns := range nsList.Items {
-			if strings.HasPrefix(ns.Name, toComplete) {
-				names = append(names, ns.Name)
-			}
-		}
-		return names, cobra.ShellCompDirectiveNoFileComp
-	})
-	// Register pod completion
-	rootCmd.RegisterFlagCompletionFunc("pod", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		config, err := getKubeConfig()
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-		clientset, err := kubernetes.NewForConfig(config)
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-
-		ns := namespace
-		if ns == "" {
-			nsBytes, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
-			if err != nil {
-				ns = "default"
-			} else {
-				ns = strings.TrimSpace(string(nsBytes))
-			}
-		}
-
-		pods, err := clientset.CoreV1().Pods(ns).List(context.Background(), metav1.ListOptions{})
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-
-		names := make([]string, 0, len(pods.Items))
-		for _, pod := range pods.Items {
-			if strings.HasPrefix(pod.Name, toComplete) {
-				names = append(names, pod.Name)
-			}
-		}
-		return names, cobra.ShellCompDirectiveNoFileComp
-	})
 }
 
 func runMounts(cmd *cobra.Command) {
