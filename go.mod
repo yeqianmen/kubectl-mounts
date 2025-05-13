@@ -1,6 +1,6 @@
 module github.com/yeqianmen/kubectl-mounts
 
-go 1.24
+go 1.24.2
 
 require (
 	github.com/olekukonko/tablewriter v0.0.5
