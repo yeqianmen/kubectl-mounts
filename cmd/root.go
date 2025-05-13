@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -19,14 +21,23 @@ var (
 	namespace  string
 	podFilter  string
 	kubeconfig string
+	output     string
 )
+
+type MountInfo struct {
+	PodName    string `yaml:"pod"`
+	Container  string `yaml:"container"`
+	VolumeName string `yaml:"volume"`
+	MountPath  string `yaml:"mountPath"`
+	VolumeType string `yaml:"volumeType"`
+}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "kubectl-mounts",
 	Short: "Show Pod Volumes and VolumeMounts in the cluster",
 	Run: func(cmd *cobra.Command, args []string) {
-		runMounts()
+		runMounts(cmd)
 	},
 }
 
@@ -42,6 +53,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&namespace, "namespace", "n", "", "Namespace (default is current namespace)")
 	rootCmd.Flags().StringVarP(&podFilter, "pod", "p", "", "Filter by specific Pod name")
 	rootCmd.Flags().StringVarP(&kubeconfig, "kubeconfig", "k", "", "Path to kubeconfig file (default $HOME/.kube/config)")
+	rootCmd.Flags().StringVarP(&output, "output", "o", "", "Output format: table|yaml|json(default table)")
 	// Register namespace completion
 	rootCmd.RegisterFlagCompletionFunc("namespace", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		config, err := getKubeConfig()
@@ -102,7 +114,7 @@ func init() {
 	})
 }
 
-func runMounts() {
+func runMounts(cmd *cobra.Command) {
 	config, err := getKubeConfig()
 	if err != nil {
 		fmt.Println("Failed to get Kubernetes config:", err)
@@ -130,19 +142,13 @@ func runMounts() {
 		fmt.Println("Failed to list Pods:", err)
 		os.Exit(1)
 	}
-
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Pod", "Container", "Volume Name", "MountPath", "Volume Type"})
-	table.SetAutoFormatHeaders(false)
-	table.SetAutoMergeCells(true)
-	table.SetRowLine(true)
+	var results []MountInfo
 
 	for _, pod := range pods.Items {
 		if podFilter != "" && pod.Name != podFilter {
 			continue
 		}
 
-		// Build Volume name and type mapping
 		volumeTypeMap := make(map[string]string)
 		for _, v := range pod.Spec.Volumes {
 			volumeTypeMap[v.Name] = describeVolumeSource(v)
@@ -150,19 +156,52 @@ func runMounts() {
 
 		for _, c := range pod.Spec.Containers {
 			for _, m := range c.VolumeMounts {
-				volumeType := volumeTypeMap[m.Name]
-				table.Append([]string{
-					pod.Name,
-					c.Name,
-					m.Name,
-					m.MountPath,
-					volumeType,
+				results = append(results, MountInfo{
+					PodName:    pod.Name,
+					Container:  c.Name,
+					VolumeName: m.Name,
+					MountPath:  m.MountPath,
+					VolumeType: volumeTypeMap[m.Name],
 				})
 			}
 		}
 	}
 
-	table.Render()
+	// Determine output format: YAML, JSON, or table (default).
+	outputFormat, _ := cmd.Flags().GetString("output")
+	switch outputFormat {
+	case "yaml":
+		out, err := yaml.Marshal(results)
+		if err != nil {
+			fmt.Println("Failed to marshal YAML:", err)
+			os.Exit(1)
+		}
+		fmt.Println(string(out))
+	case "json":
+		out, err := json.MarshalIndent(results, "", "  ")
+		if err != nil {
+			fmt.Println("Failed to marshal JSON:", err)
+			os.Exit(1)
+		}
+		fmt.Println(string(out))
+	default:
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Pod", "Container", "Volume Name", "MountPath", "Volume Type"})
+		table.SetAutoFormatHeaders(false)
+		table.SetAutoMergeCells(true)
+		table.SetRowLine(true)
+
+		for _, item := range results {
+			table.Append([]string{
+				item.PodName,
+				item.Container,
+				item.VolumeName,
+				item.MountPath,
+				item.VolumeType,
+			})
+		}
+		table.Render()
+	}
 }
 
 func describeVolumeSource(v corev1.Volume) string {
@@ -172,11 +211,11 @@ func describeVolumeSource(v corev1.Volume) string {
 	case v.HostPath != nil:
 		return "HostPath"
 	case v.PersistentVolumeClaim != nil:
-		return "PVC"
+		return fmt.Sprintf("PVC(%s)", v.PersistentVolumeClaim.ClaimName)
 	case v.ConfigMap != nil:
-		return "ConfigMap"
+		return fmt.Sprintf("ConfigMap(%s)", v.ConfigMap.Name)
 	case v.Secret != nil:
-		return "Secret"
+		return fmt.Sprintf("Secret(%s)", v.Secret.SecretName)
 	case v.Projected != nil:
 		return "Projected"
 	default:
