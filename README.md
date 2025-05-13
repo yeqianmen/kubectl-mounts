@@ -48,7 +48,7 @@ Example output:
 ```
 ## Installation
 ```bash
-go install github.com/yeqianmen/kubectl-mounts@v0.0.4
+go install github.com/yeqianmen/kubectl-mounts@latest
 ```
 Or build manually:
 
