@@ -12,22 +12,43 @@
 ## Usage
 
 ```bash
-kubectl mounts
+Show Pod Volumes and VolumeMounts in the cluster
+
+Usage:
+  kubectl-mounts [flags]
+  kubectl-mounts [command]
+
+Available Commands:
+  completion  Generate completion script
+  help        Help about any command
+
+Flags:
+  -h, --help                help for kubectl-mounts
+  -k, --kubeconfig string   Path to kubeconfig file (default $HOME/.kube/config)
+  -n, --namespace string    Namespace (default is current namespace)
+  -o, --output string       Output format: table|yaml|json(default table)
+  -p, --pod string          Filter by specific Pod name
+
+Use "kubectl-mounts [command] --help" for more information about a command.
+
 ```
 Example output:
 
 ```pgsql
 
-+------------+-----------+--------------+----------------------+---------------------+
-| POD        | CONTAINER | VOLUME NAME  | MOUNT PATH           | VOLUME TYPE         |
-+------------+-----------+--------------+----------------------+---------------------+
-| mypod-1234 | app       | config-vol   | /etc/config          | ConfigMap(app-cm)   |
-| mypod-1234 | app       | log-vol      | /var/log             | EmptyDir            |
-+------------+-----------+--------------+----------------------+---------------------+
++-----------------------------------------+-----------------------------------+-----------------------------------+-----------------------------------------------+--------------------------------------------------+
+|                   Pod                   |             Container             |            Volume Name            |                   MountPath                   |                   Volume Type                    |
++-----------------------------------------+-----------------------------------+-----------------------------------+-----------------------------------------------+--------------------------------------------------+
+| default-flyflow-console-8d97c74f-mxmgp  | default-flyflow-console-container | default-flyflow-console-nginxconf | /conf                                         | ConfigMap(cm-default-flyflow-console-nagix.conf) |
++                                         +                                   +-----------------------------------+-----------------------------------------------+--------------------------------------------------+
+|                                         |                                   | kube-api-access-gtfww             | /var/run/secrets/kubernetes.io/serviceaccount | Projected                                        |
++-----------------------------------------+-----------------------------------+-----------------------------------+                                               +                                                  +
+| ephemeral-demo                          | ephemeral-demo                    | kube-api-access-spnk2             |                                               |                                                  |
++-----------------------------------------+-----------------------------------+-----------------------------------+-----------------------------------------------+--------------------------------------------------+                                         
 ```
-Installation
+## Installation
 ```bash
-go install github.com/yeqianmen/kubectl-mounts@latest
+go install github.com/yeqianmen/kubectl-mounts@v0.0.4
 ```
 Or build manually:
 
@@ -37,3 +58,25 @@ cd kubectl-mounts
 go build -o kubectl-mounts
 sudo mv kubectl-mounts /usr/local/bin/
 ```
+## Completion
+
+Supported Completions
+- --namespace: Auto-completes available namespaces in the cluster
+
+- --pod: Auto-completes pod names in the selected namespace
+
+- --output: Supports table, yaml, and json formats
+ 
+**Bash**
+
+Load completion for current session:
+```bash
+source <(kubectl-mounts completion bash)
+```
+**Zsh**
+
+Load completion for current session:
+```bash
+source <(kubectl-mounts completion zsh)
+```
+
