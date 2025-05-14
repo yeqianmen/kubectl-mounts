@@ -19,7 +19,7 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_darwin_amd64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_darwin_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
@@ -30,7 +30,7 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_darwin_arm64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_darwin_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
@@ -41,7 +41,7 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_linux_amd64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_linux_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
@@ -52,7 +52,7 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_linux_arm64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_linux_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
@@ -63,7 +63,7 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_linux_arm.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_linux_arm.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
@@ -74,5 +74,5 @@ spec:
           to: .
         - from: LICENSE
           to: .
-      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts//releases/download/{{ .TagName }}/kubectl-images_windows_amd64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-images_windows_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts.exe
