@@ -47,17 +47,23 @@ Example output:
 +-----------------------------------------+-----------------------------------+-----------------------------------+-----------------------------------------------+--------------------------------------------------+                                         
 ```
 ## Installation
-**Homebrew**
+### Homebrew
+
 If you use Homebrew you can install like this:
 ```bash
 brew tap yeqianmen/kubectl-mounts
 brew install kubectl-mounts
 ```
 
+### Using Krew (kubectl Plugin Manager)
+
+If you use kubectl and have Krew installed, you can install Kelper as a kubectl plugin:
+```bash
+kubectl krew install mounts
+```
 
 
-
-Or build **manually**:
+### Build manually
 
 ```bash
 git clone https://github.com/yeqianmen/kubectl-mounts.git
@@ -65,6 +71,7 @@ cd kubectl-mounts
 go build -o kubectl-mounts
 sudo mv kubectl-mounts /usr/local/bin/
 ```
+
 ## Completion
 
 Supported Completions
