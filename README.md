@@ -47,8 +47,17 @@ Example output:
 +-----------------------------------------+-----------------------------------+-----------------------------------+-----------------------------------------------+--------------------------------------------------+                                         
 ```
 ## Installation
+**Homebrew**
+If you use Homebrew you can install like this:
+```bash
+brew tap yeqianmen/kubectl-mounts
+brew install kubectl-mounts
+```
 
-Or build manually:
+
+
+
+Or build **manually**:
 
 ```bash
 git clone https://github.com/yeqianmen/kubectl-mounts.git
