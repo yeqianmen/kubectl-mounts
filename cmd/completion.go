@@ -40,13 +40,19 @@ Zsh:
 `,
 	DisableFlagsInUseLine: true,
 	ValidArgs:             []string{"bash", "zsh"},
-	Args:                  cobra.ExactValidArgs(1),
+	Args:                  cobra.MatchAll(cobra.OnlyValidArgs, cobra.ExactArgs(1)),
 	Run: func(cmd *cobra.Command, args []string) {
 		switch args[0] {
 		case "bash":
-			rootCmd.GenBashCompletion(os.Stdout)
+			err := rootCmd.GenBashCompletion(os.Stdout)
+			if err != nil {
+				return
+			}
 		case "zsh":
-			rootCmd.GenZshCompletion(os.Stdout)
+			err := rootCmd.GenZshCompletion(os.Stdout)
+			if err != nil {
+				return
+			}
 		}
 	},
 }

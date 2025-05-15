@@ -18,10 +18,11 @@ import (
 )
 
 var (
-	namespace  string
-	podFilter  string
-	kubeconfig string
-	output     string
+	namespace   string
+	podFilter   string
+	kubeconfig  string
+	output      string
+	showVersion bool
 )
 
 type MountInfo struct {
@@ -32,11 +33,18 @@ type MountInfo struct {
 	VolumeType string `yaml:"volumeType"`
 }
 
+const version = "0.0.5"
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "kubectl-mounts",
 	Short: "Show Pod Volumes and VolumeMounts in the cluster",
 	Run: func(cmd *cobra.Command, args []string) {
+		// Add version output
+		if showVersion {
+			fmt.Printf("kubectl-mounts version %s\n", version)
+			os.Exit(0)
+		}
 		runMounts(cmd)
 	},
 }
@@ -54,6 +62,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&podFilter, "pod", "p", "", "Filter by specific Pod name")
 	rootCmd.Flags().StringVarP(&kubeconfig, "kubeconfig", "k", "", "Path to kubeconfig file (default $HOME/.kube/config)")
 	rootCmd.Flags().StringVarP(&output, "output", "o", "", "Output format: table|yaml|json(default table)")
+	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Show version")
 	// Register flag
 	RegisterCompletions(rootCmd)
 
