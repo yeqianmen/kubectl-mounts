@@ -28,6 +28,7 @@ Flags:
   -n, --namespace string    Namespace (default is current namespace)
   -o, --output string       Output format: table|yaml|json(default table)
   -p, --pod string          Filter by specific Pod name
+  -v, --version             Show version
 
 Use "kubectl-mounts [command] --help" for more information about a command.
 
