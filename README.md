@@ -1,5 +1,5 @@
 # kubectl-mounts
-[🇨🇳 中文说明](./README.zh.md) | [🇺🇸 English](./README.md)
+English|[简体中文](./README.zh.md) 
 
 `kubectl-mounts` is a `kubectl` plugin written in Go that displays detailed information about Pod volumes and their mount paths in the current Kubernetes namespace.
 
