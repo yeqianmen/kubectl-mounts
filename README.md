@@ -1,4 +1,5 @@
 # kubectl-mounts
+[🇨🇳 中文说明](./README.zh.md) | [🇺🇸 English](./README.md)
 
 `kubectl-mounts` is a `kubectl` plugin written in Go that displays detailed information about Pod volumes and their mount paths in the current Kubernetes namespace.
 
@@ -76,19 +77,19 @@ sudo mv kubectl-mounts /usr/local/bin/
 ## Completion
 
 Supported Completions
-- --namespace: Auto-completes available namespaces in the cluster
+- -n: Auto-completes available namespaces in the cluster
 
-- --pod: Auto-completes pod names in the selected namespace
+- -p: Auto-completes pod names in the selected namespace
 
-- --output: Supports table, yaml, and json formats
+- -o: Supports table, yaml, and json formats
  
-**Bash**
+### Bash
 
 Load completion for current session:
 ```bash
 source <(kubectl-mounts completion bash)
 ```
-**Zsh**
+### Zsh
 
 Load completion for current session:
 ```bash
