@@ -1,6 +1,6 @@
 # kubectl-mounts
 
-[🇨🇳 中文说明](./README.zh.md) | [🇺🇸 English](./README.md)
+简体中文| [English](./README.md)
 
 `kubectl-mounts` 是一个用 Go 编写的 `kubectl` 插件，用于展示当前 Kubernetes 命名空间中 Pod 卷（Volume）及其挂载路径的详细信息。
 
