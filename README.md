@@ -61,7 +61,7 @@ brew install kubectl-mounts
 
 If you use kubectl and have Krew installed, you can install Kelper as a kubectl plugin:
 ```bash
-kubectl krew install mounts
+kubectl krew install --manifest-url https://github.com/yeqianmen/kubectl-mounts/releases/download/v0.1.1/mounts.yaml
 ```
 
 
