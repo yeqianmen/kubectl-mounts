@@ -50,5 +50,5 @@ krews:
 
 release:
   extra_files:
-    - glob: kubectl-mounts.yaml
+    - glob: ./dist/krew/mounts.yaml
 
