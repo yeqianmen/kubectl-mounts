@@ -12,6 +12,7 @@ bin/
 .vscode/
 .idea/
 
+
 # Logs and temp
 *.log
 *.tmp
@@ -22,3 +23,6 @@ vendor/
 
 # Environment files
 .env
+
+#goreleaser
+dist/
