@@ -33,7 +33,7 @@ type MountInfo struct {
 	VolumeType string `yaml:"volumeType"`
 }
 
-const version = "0.0.5"
+var version = "0.0.5"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

@@ -20,6 +20,8 @@ builds:
         goarch: arm64
       - goos: darwin
         goarch: arm
+    ldflags:
+      - -s -w -X 'github.com/yeqianmen/kubectl-mounts/cmd.version={{ .Version }}'
         
 
 
@@ -35,4 +37,4 @@ archives:
 release:
   extra_files:
     - glob: kubectl-mounts.yaml
-
+  draft: true
