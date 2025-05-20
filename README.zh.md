@@ -62,7 +62,7 @@ brew install kubectl-mounts
 
 ```bash
 
-kubectl krew install mounts
+kubectl krew install --manifest-url https://github.com/yeqianmen/kubectl-mounts/releases/download/v0.1.1/mounts.yaml
 ```
 ### 手动构建安装
 ```bash
