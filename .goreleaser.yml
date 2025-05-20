@@ -45,7 +45,7 @@ krews:
       A kubectl plugin that displays detailed information about pod volumes
       and volumeMounts, helping developers inspect Kubernetes storage usage.
     short_description: "Show volumes and volumeMounts for pods in the current namespace"
-    url_template: "https://github.com/MartinSimango/kubectl-plugin_completion/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    url_template: "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     skip_upload: true
 
 release:
