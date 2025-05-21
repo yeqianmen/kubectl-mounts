@@ -163,7 +163,7 @@ func describeVolumeSource(v corev1.Volume) string {
 	case v.EmptyDir != nil:
 		return "EmptyDir"
 	case v.HostPath != nil:
-		return "HostPath"
+		return fmt.Sprintf("HostPath(%s)", v.HostPath.Path)
 	case v.PersistentVolumeClaim != nil:
 		return fmt.Sprintf("PVC(%s)", v.PersistentVolumeClaim.ClaimName)
 	case v.ConfigMap != nil:
@@ -171,7 +171,14 @@ func describeVolumeSource(v corev1.Volume) string {
 	case v.Secret != nil:
 		return fmt.Sprintf("Secret(%s)", v.Secret.SecretName)
 	case v.Projected != nil:
+		for _, src := range v.Projected.Sources {
+			if src.ServiceAccountToken != nil {
+				return "ServiceAccountToken"
+			}
+		}
 		return "Projected"
+	case v.NFS != nil:
+		return fmt.Sprintf("NFS(%s:%s)", v.NFS.Server, v.NFS.Path)
 	default:
 		return "Other"
 	}

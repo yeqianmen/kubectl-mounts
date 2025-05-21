@@ -47,7 +47,28 @@ krews:
     short_description: "Show volumes and volumeMounts for pods in the current namespace"
     url_template: "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     skip_upload: true
+brews:
+  - name: kubectl-mounts
+    repository:
+      owner: yeqianmen
+      name: homebrew-kubectl-mounts
+      branch: main
+    license: "MIT"
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+    homepage: "https://github.com/yeqianmen/kubectl-mounts"
 
+    description: "A kubectl plugin to display pod volumes and volumeMounts."
+    test: |
+      system "#{bin}/kubectl-mounts --version"
+    install: |
+      bin.install "kubectl-mounts"
+    caveats: |
+      This plugin is installed as `kubectl-mounts`. You can also use it by running:
+        kubectl mounts
+    skip_upload: true
 release:
   extra_files:
     - glob: ./dist/krew/mounts.yaml
