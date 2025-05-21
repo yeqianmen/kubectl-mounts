@@ -53,6 +53,8 @@ brews:
       owner: yeqianmen
       name: homebrew-kubectl-mounts
       branch: main
+      token: "{{ .Env.GITHUB_TOKEN }}"
+
     license: "MIT"
     commit_author:
       name: goreleaserbot
@@ -68,7 +70,7 @@ brews:
     caveats: |
       This plugin is installed as `kubectl-mounts`. You can also use it by running:
         kubectl mounts
-    skip_upload: true
+
 release:
   extra_files:
     - glob: ./dist/krew/mounts.yaml
