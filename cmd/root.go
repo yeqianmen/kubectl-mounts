@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
+	"github.com/yeqianmen/kubectl-mounts/utils"
 	"gopkg.in/yaml.v3"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -23,6 +24,7 @@ var (
 	kubeconfig  string
 	output      string
 	showVersion bool
+	short       bool
 )
 
 type MountInfo struct {
@@ -33,7 +35,7 @@ type MountInfo struct {
 	VolumeType string `yaml:"volumeType"`
 }
 
-var version = "0.0.5"
+var Version = "0.0.5"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -42,7 +44,7 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// Add version output
 		if showVersion {
-			fmt.Printf("kubectl-mounts version %s\n", version)
+			fmt.Printf("kubectl-mounts version %s\n", Version)
 			os.Exit(0)
 		}
 		runMounts(cmd)
@@ -63,6 +65,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&kubeconfig, "kubeconfig", "k", "", "Path to kubeconfig file (default $HOME/.kube/config)")
 	rootCmd.Flags().StringVarP(&output, "output", "o", "", "Output format: table|yaml|json(default table)")
 	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Show version")
+	rootCmd.Flags().BoolVarP(&short, "short", "s", false, "Truncate content inside parentheses for compact output")
 	// Register flag
 	RegisterCompletions(rootCmd)
 
@@ -146,12 +149,26 @@ func runMounts(cmd *cobra.Command) {
 		table.SetRowLine(true)
 
 		for _, item := range results {
+			var podName, container, volumeName, mountPath, volumeType string
+			if short {
+				podName = utils.TruncateSmart(item.PodName, "-", 3)
+				container = utils.TruncateSmart(item.Container, "-", 3)
+				volumeName = utils.TruncateSmart(item.VolumeName, "-", 3)
+				mountPath = utils.TruncateSmart(item.MountPath, "/", 4)
+				volumeType = utils.TruncateSmart(item.VolumeType, "-", 3)
+			} else {
+				podName = item.PodName
+				container = item.Container
+				volumeName = item.VolumeName
+				mountPath = item.MountPath
+				volumeType = item.VolumeType
+			}
 			table.Append([]string{
-				item.PodName,
-				item.Container,
-				item.VolumeName,
-				item.MountPath,
-				item.VolumeType,
+				podName,
+				container,
+				volumeName,
+				mountPath,
+				volumeType,
 			})
 		}
 		table.Render()
