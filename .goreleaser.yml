@@ -54,12 +54,12 @@ brews:
       name: homebrew-kubectl-mounts
       branch: main
       token: "{{ .Env.GITHUB_TOKEN }}"
-
     license: "MIT"
     commit_author:
       name: goreleaserbot
       email: bot@goreleaser.com
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+    directory: Formula
     homepage: "https://github.com/yeqianmen/kubectl-mounts"
 
     description: "A kubectl plugin to display pod volumes and volumeMounts."
