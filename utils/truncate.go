@@ -2,7 +2,7 @@ package utils
 
 import "strings"
 
-// truncateBySeparator truncates the string, keeping up to maxParts segments,
+// truncates the string, keeping up to maxParts segments,
 // appending "..." if there are more segments than maxParts.
 func truncateBySeparator(s, sep string, maxParts int) string {
 	parts := strings.Split(s, sep)
@@ -12,7 +12,7 @@ func truncateBySeparator(s, sep string, maxParts int) string {
 	return strings.Join(parts[:maxParts], sep) + "..."
 }
 
-// TruncateSmart truncates only the content inside parentheses if present,
+// truncates only the content inside parentheses if present,
 // otherwise truncates the entire string.
 func TruncateSmart(s, sep string, maxParts int) string {
 	start := strings.Index(s, "(")
