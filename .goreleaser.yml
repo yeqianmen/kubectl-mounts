@@ -22,7 +22,7 @@ builds:
         goarch: arm
     ldflags:
       - -s -w -X 'github.com/yeqianmen/kubectl-mounts/cmd.version={{ .Version }}'
-        
+
 
 
 archives:
@@ -71,7 +71,12 @@ brews:
       This plugin is installed as `kubectl-mounts`. You can also use it by running:
         kubectl mounts
 
+before:
+  hooks:
+    - mv ./dist/krew/mounts.yaml ./.krew.yaml
+
 release:
   extra_files:
     - glob: ./dist/krew/mounts.yaml
+
 
