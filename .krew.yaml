@@ -4,7 +4,7 @@ metadata:
   name: mounts
 spec:
   version: {{ .TagName }}
-  homepage: https://github.com/your-org/kubectl-mounts
+  homepage: https://github.com/yeqianmen/kubectl-mounts
   shortDescription: Show Pods' Volumes and VolumeMounts in the current namespace
   description: |
     kubectl-mounts is a kubectl plugin that lists all Pods in the
@@ -14,34 +14,34 @@ spec:
         matchLabels:
           os: linux
           arch: amd64
-      uri: https://github.com/your-org/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_{{ .TagName }}_linux_amd64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_{{ .TagName }}_linux_amd64.tar.gz" .TagName}}
+      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_amd64.tar.gz
+      sha256: {{ addURIAndSha "kubectl-mounts_linux_amd64.tar.gz" .TagName}}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: linux
           arch: arm64
-      uri: https://github.com/your-org/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_{{ .TagName }}_linux_arm64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_{{ .TagName }}_linux_arm64.tar.gz" .TagName }}
+      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_arm64.tar.gz
+      sha256: {{ addURIAndSha "kubectl-mounts_linux_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: darwin
           arch: amd64
-      uri: https://github.com/your-org/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_{{ .TagName }}_darwin_amd64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_{{ .TagName }}_darwin_amd64.tar.gz" .TagName }}
+      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_amd64.tar.gz
+      sha256: {{ addURIAndSha "kubectl-mounts_darwin_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: darwin
           arch: arm64
-      uri: https://github.com/your-org/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_{{ .TagName }}_darwin_arm64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_{{ .TagName }}_darwin_arm64.tar.gz" .TagName }}
+      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_arm64.tar.gz
+      sha256: {{ addURIAndSha "kubectl-mounts_darwin_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: windows
           arch: amd64
-      uri: https://github.com/your-org/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_{{ .TagName }}_windows_amd64.zip
-      sha256: {{ addURIAndSha "kubectl-mounts_{{ .TagName }}_windows_amd64.zip" .TagName }}
+      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_windows_amd64.zip
+      sha256: {{ addURIAndSha "kubectl-mounts_windows_amd64.zip" .TagName }}
       bin: kubectl-mounts.exe
