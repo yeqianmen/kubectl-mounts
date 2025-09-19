@@ -66,8 +66,7 @@ brew install kubectl-mounts
 如果你使用 kubectl 并已安装 Krew，可通过以下方式安装本插件：
 
 ```bash
-
-kubectl krew install --manifest-url https://github.com/yeqianmen/kubectl-mounts/releases/download/v0.1.1/mounts.yaml
+kubectl krew  install mounts
 ```
 ### 手动构建安装
 ```bash
