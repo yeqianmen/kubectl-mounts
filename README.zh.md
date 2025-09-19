@@ -1,4 +1,5 @@
 # kubectl-mounts
+[![kubectl mounts](https://img.shields.io/badge/install%20with-krew-blue?logo=kubernetes&logoColor=white)](https://krew.sigs.k8s.io/plugins/)
 
 简体中文| [English](./README.md)
 
