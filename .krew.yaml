@@ -14,34 +14,29 @@ spec:
         matchLabels:
           os: linux
           arch: amd64
-      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_amd64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_linux_amd64.tar.gz" .TagName}}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_amd64.tar.gz" .TagName}}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: linux
           arch: arm64
-      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_arm64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_linux_arm64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_linux_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: darwin
           arch: amd64
-      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_amd64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_darwin_amd64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: darwin
           arch: arm64
-      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_arm64.tar.gz
-      sha256: {{ addURIAndSha "kubectl-mounts_darwin_arm64.tar.gz" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_darwin_arm64.tar.gz" .TagName }}
       bin: kubectl-mounts
     - selector:
         matchLabels:
           os: windows
           arch: amd64
-      uri: https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_windows_amd64.zip
-      sha256: {{ addURIAndSha "kubectl-mounts_windows_amd64.zip" .TagName }}
+      {{ addURIAndSha "https://github.com/yeqianmen/kubectl-mounts/releases/download/{{ .TagName }}/kubectl-mounts_windows_amd64.tar.gz" .TagName }}
       bin: kubectl-mounts.exe
